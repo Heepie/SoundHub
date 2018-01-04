@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <import type="com.heepie.soundhub.utils.Const"/>
+        <variable
+            name="activity"
+            type="android.app.Activity"/>
+        <variable
+            name="viewModel"
+            type="com.heepie.soundhub.viewmodel.UsersViewModel"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:orientation="vertical"
+        android:background="@color/white"
+        android:layout_margin="2dp"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Popular User"
+            android:layout_margin="4sp"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            />
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:activity="@{activity}"
+            app:setInnerViewModel="@{viewModel.users}"
+            app:layoutType="@{Const.VIEW_TYPE_POPULAR_USER}"
+            >
+
+        </android.support.v7.widget.RecyclerView>
+
+    </LinearLayout>
+
+
+
+</layout>

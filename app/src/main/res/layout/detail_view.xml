@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="model"
+            type="com.heepie.soundhub.domain.model.Post" />
+        <variable
+            name="view"
+            type="com.heepie.soundhub.view.DetailView"/>
+        <variable
+            name="viewModel"
+            type="com.heepie.soundhub.viewmodel.DetailViewModel" />
+    </data>
+
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="?attr/colorPrimary"
+                android:minHeight="?attr/actionBarSize"
+                android:theme="?attr/actionBarTheme"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageButton
+                    style="@style/ToolBarButton"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:onClick="@{view::onClickedMenu}"
+                    android:src="@drawable/icon_menu"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </android.support.v7.widget.Toolbar>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="8"
+                android:orientation="vertical">
+
+
+
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="2">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/imageView2"
+                        android:layout_width="59dp"
+                        android:layout_height="55dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:transitionName="@string/sharedImage"
+                        app:loadImage="@{model.author.profile_img}"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        />
+                    <!--app:loadCircleImage="@{model.user.user_image_path}"-->
+
+                    <RelativeLayout
+                        android:id="@+id/relativeLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/imageView2">
+
+                        <TextView
+                            android:id="@+id/textView2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Master Track"
+                            android:textSize="20dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentTop="true"
+                            android:text="BPM     100" />
+
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toTopOf="@+id/textView3"
+                        app:layout_constraintTop_toBottomOf="@+id/relativeLayout"
+                        tools:layout_editor_absoluteX="0dp">
+
+                        <ImageButton
+                            android:layout_width="0dp"
+                            android:layout_height="45dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_weight="1"
+                            android:scaleType="fitXY"
+                            android:background="@android:color/transparent"
+                            android:onClick="@{viewModel::onClickedMasterPlay}"
+                            app:srcCompat="@drawable/music_play" />
+
+                        <rm.com.audiowave.AudioWaveView
+                            android:id="@+id/wave"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="6"
+                            android:visibility="visible"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="8dp"
+                            app:chunkHeight="24dp"
+                            app:chunkRadius="1dp"
+                            app:chunkSpacing="1dp"
+                            app:chunkWidth="3dp"
+                            app:minChunkHeight="2dp"
+                            app:setCurProgr="@{viewModel.player.curDuration}"
+                            app:setWave="@{viewModel.masterPath}"
+                            app:waveColor="@android:color/black" />
+
+                    </LinearLayout>
+
+
+
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:text="@{viewModel.player.curTime}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <android.support.constraint.ConstraintLayout
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintBottom_toTopOf="@+id/relativeLayout"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/imageView2"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:id="@+id/imageView6"
+                            style="@style/icon"
+                            android:transitionName="@string/sharedLike"
+                            app:layout_constraintEnd_toStartOf="@+id/textView6"
+                            app:srcCompat="@drawable/icon_like" />
+
+                        <ImageView
+                            android:id="@+id/imageView7"
+                            style="@style/icon"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:transitionName="@string/sharedComment"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/textView7"
+                            app:srcCompat="@drawable/comments" />
+
+                        <TextView
+                            android:id="@+id/textView7"
+                            android:layout_width="50dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBottom="@+id/textView5"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:gravity="right"
+                            android:text="@{model.num_comments}"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent" />
+
+                        <TextView
+                            android:id="@+id/textView5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
+                            android:text="@{model.author.nickname}"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent" />
+
+                        <TextView
+                            android:id="@+id/textView6"
+                            android:layout_width="50dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignTop="@+id/textView4"
+                            android:gravity="right"
+                            android:text="@{model.num_liked}"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/textView4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignLeft="@+id/textView5"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignStart="@+id/textView5"
+                            android:text="@{model.title}"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </android.support.constraint.ConstraintLayout>
+
+
+
+                </android.support.constraint.ConstraintLayout>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="3">
+
+                    <ExpandableListView
+                        android:id="@+id/expnad_list_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/black"
+                        />
+
+                    <ProgressBar
+                        android:id="@+id/progress_bar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:visibility="gone"
+                        />
+                </FrameLayout>
+            </LinearLayout>
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/comment_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                app:contentInsetEnd="0dp"
+                app:contentInsetLeft="0dp"
+                app:contentInsetRight="0dp"
+                app:contentInsetStart="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/black"
+                    android:orientation="horizontal">
+
+                    <Button
+                        style="@style/blackConcept"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:onClick="@{(v) -> viewModel.onClickedMerge(v, view, progressBar)}"
+                        app:setMergeVisible="@{model}"
+                        android:text="음원 만들기" />
+
+                    <Button
+                        style="@style/blackConcept"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:onClick="@{(v) -> viewModel.onClickedPlayPause(v, progressBar)}"
+                        android:text="재생" />
+
+                    <Button
+                        style="@style/blackConcept"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:onClick="@{viewModel::onClickedUpLoad}"
+                        android:text="업로드" />
+
+                </LinearLayout>
+
+            </android.support.v7.widget.Toolbar>
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:backgroundTint="@color/colorUser"
+            android:padding="70dp"
+            android:visibility="gone">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorUser">
+
+                <Button
+                    android:id="@+id/button4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="1dp"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="2dp"
+                    app:layout_constraintEnd_toStartOf="@+id/button9"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/button9"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="2dp"
+                    android:layout_marginStart="1dp"
+                    android:layout_marginTop="2dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/button4"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/button10"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginEnd="2dp"
+                    android:layout_marginStart="2dp"
+                    android:text="Button"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+
+            </android.support.constraint.ConstraintLayout>
+        </FrameLayout>
+
+        <android.support.design.widget.NavigationView
+            android:id="@+id/navigation"
+            android:layout_width="250dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start|left"
+            >
+
+        </android.support.design.widget.NavigationView>
+
+
+    </android.support.v4.widget.DrawerLayout>
+
+
+</layout>

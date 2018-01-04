@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "316999981907",
+    "project_id": "firebase-soundhub"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:316999981907:android:d36ab6a1df4ea47a",
+        "android_client_info": {
+          "package_name": "com.heepie.soundhub"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "316999981907-onsccon0ovrkv8tm7eaqrl5vn7q7a3eq.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "316999981907-guk3ojsckrl5v2fqdr45fkhadb9nep55.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.heepie.soundhub",
+            "certificate_hash": "fbd430fc02159fe9bddc13cf0fcc216ce49697f5"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBvxokCUgj3stC8wL0J2ZWIOjR8sldWgek"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

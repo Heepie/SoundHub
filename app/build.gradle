@@ -11,10 +11,30 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+        // 디버그 버전
+        debug {
+            // String 자료형에 SERVER_URL 변수명으로 값 설정
+            buildConfigField "String", "SERVER_URL", "\"https://soundhub.che1.co.kr/\""
+            buildConfigField "String", "FILE_SERVER_URL", "\"https://s3.ap-northeast-2.amazonaws.com/che1-soundhub/\""
+            buildConfigField "String", "NAVER_CLIENT_ID", "\"Ywlv5FlboNgwv3yyPOX3\""
+            buildConfigField "String", "NAVER_CLIENT_PW", "\"Pj8BFTHyQD\""
+            buildConfigField "String", "NAVER_CLIENT_NAME", "\"SoundHub\""
+            buildConfigField "String", "GOOGLE_CLIENT_ID", "\"316999981907-onsccon0ovrkv8tm7eaqrl5vn7q7a3eq.apps.googleusercontent.com\""
+            buildConfigField "String", "MEDIA_URL", "\"https://s3.ap-northeast-2.amazonaws.com/che1-soundhub/media/\""
+        }
+
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+
+    dataBinding {
+        enabled = true
+    }
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
     }
 }
 
@@ -25,4 +45,51 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+
+    implementation 'com.github.bumptech.glide:glide:4.0.0'
+    implementation 'com.android.support:recyclerview-v7:26.1.0'
+    implementation 'com.android.support:cardview-v7:26.1.0'
+
+//    To use Navigation View
+    implementation 'com.android.support:design:26.1.0'
+
+//    To use RxJava, RxAndroid
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.5'
+
+    //    To use CircleImageView
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
+
+//    To use Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+
+//    To use Google-Sign-in
+    implementation 'com.google.android.gms:play-services-auth:11.6.0'
+
+//    To use Naver_Id_Login
+    implementation files('libs/naveridlogin_android_sdk_4.2.0.aar')
+    implementation 'com.android.support:support-core-utils:26.1.0'
+    implementation 'com.android.support:customtabs:26.1.0'
+    implementation 'com.android.support:support-v4:26.1.0'
+//    To use audioWave
+    implementation 'com.github.alxrm:audiowave-progressbar:0.9'
+
+//    To use Facebook Login
+    implementation 'com.facebook.android:facebook-login:[4,5)'
+
+//    To use OkHttp
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
+
+//    To use Room Library
+    implementation "android.arch.persistence.room:runtime:1.0.0"
+    annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
+
+//    facebook stetho
+    implementation "com.facebook.stetho:stetho:1.4.1"
+    implementation "com.facebook.stetho:stetho-js-rhino:1.4.1"
 }
+
+// Google Sign-in
+apply plugin: 'com.google.gms.google-services'

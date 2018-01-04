@@ -1,3 +1,47 @@
 <resources>
     <string name="app_name">soundhub</string>
+    <array name="instruments">
+        <item name="Empty">Select your instrument</item>
+        <item name="V">Vocal</item>
+        <item name="G">Guitar</item>
+        <item name="B">Bass</item>
+        <item name="D">Drum</item>
+        <item name="K">Keyboard</item>
+        <item name="O">Others</item>
+    </array>
+    <array name="genre">
+        <item>Select your genre</item>
+        <item>Pop</item>
+        <item>Rock</item>
+        <item>Jazz</item>
+        <item>Hiphop</item>
+        <item>Electronic</item>
+        <item>Classic</item>
+        <item>Others</item>
+    </array>
+
+    <array name="instrumentsv">
+        <item>Vocal</item>
+        <item>Guitar</item>
+        <item>Bass</item>
+        <item>Drum</item>
+        <item>Keyboard</item>
+        <item>Others</item>
+    </array>
+    <array name="genrev">
+        <item>Pop</item>
+        <item>Rock</item>
+        <item>Jazz</item>
+        <item>Hiphop</item>
+        <item>Electronic</item>
+        <item>Classic</item>
+        <item>Others</item>
+    </array>
+
+    <string name="facebook_app_id">1977439629178361</string>
+    <string name="fb_login_protocol_scheme">fb1977439629178361</string>
+
+    <string name="sharedLike">sharedLike</string>
+    <string name="sharedComment">sharedComment</string>
+    <string name="sharedImage">sharedImage</string>
 </resources>
