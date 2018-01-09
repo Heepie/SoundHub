@@ -236,3 +236,219 @@
   ```
 
 ### 고은민
+
+1. CustomView(EditText를 이용한 커스텀 뷰)
+
+```Java
+public class ClearEditView extends AppCompatEditText implements TextWatcher, View.OnTouchListener, View.OnFocusChangeListener{
+
+    private Drawable clearDrawable;
+    private OnTouchListener onTouchListener;
+    private OnFocusChangeListener onFocusChangeListener;
+
+    public ClearEditView(Context context) {
+        super(context);
+        init();
+    }
+
+    public ClearEditView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        init();
+    }
+
+    public ClearEditView(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        init();
+    }
+
+    private void init() {
+        Drawable temp = ContextCompat.getDrawable(getContext(), R.drawable.ximage);
+        clearDrawable = DrawableCompat.wrap(temp);
+        DrawableCompat.setTintList(clearDrawable, getHintTextColors());
+        clearDrawable.setBounds(0, 0, 30, 30);
+        setClearIconVisible(false);
+
+        addTextChangedListener(this);
+        super.setOnFocusChangeListener(this);
+        super.setOnTouchListener(this);
+    }
+
+    private void setClearIconVisible(boolean visible) {
+        clearDrawable.setVisible(visible, false);
+        setCompoundDrawables(null, null, visible ? clearDrawable : null, null);
+    }
+
+
+
+    //  ======================================================================================================TouchListener
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        int x = (int) event.getX();
+        if(clearDrawable.isVisible() && x > getWidth() - getPaddingRight() - 30) {
+            if(event.getAction() == MotionEvent.ACTION_UP) {
+                setText(null);
+            }
+            return true;
+        }
+
+        if (onTouchListener != null) {
+            return onTouchListener.onTouch(v, event);
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public void onFocusChange(final View view, final boolean hasFocus) {
+        if (hasFocus) {
+            setClearIconVisible(getText().length() > 0);
+        } else {
+            setClearIconVisible(false);
+        }
+
+        if (onFocusChangeListener != null) {
+            onFocusChangeListener.onFocusChange(view, hasFocus);
+        }
+    }
+
+    @Override
+    public void setOnFocusChangeListener( OnFocusChangeListener onFocusChangeListener) {
+        this.onFocusChangeListener = onFocusChangeListener;
+    }
+
+
+
+    @Override
+    public void setOnTouchListener(OnTouchListener onTouchListener) {
+        this.onTouchListener = onTouchListener;
+    }
+
+
+    //  ========================================================================================================= TextWatcher
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+        if(isFocused()) {
+            setClearIconVisible(s.length() > 0);
+        }
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+
+    }
+
+}
+```
+
+2. Room - 구글 안드로이드 아키텍쳐 컴포넌트
+
+> 참고 : [Room Persistence Library](https://developer.android.com/topic/libraries/architecture/room.html)
+
+2-1 Room ?!
+
+> - Room은 Sqlite 위에 만든 구글의 새로운 ORM 이다.   
+> - Room은 개발자가 자료를 질의하기 위한 SQL을 작성해야 한다.  
+> - 반한된 객체의 자식에 대한 게으른 로딩(lazy loading)을 지원하지 않는다.  
+>   > lazy loading이란 : 객체가 필요한 시점까지 객체 초기화를 연기하기 위해 컴퓨터 프로그래밍에서 일반적으로 사용되는 디자인 패턴이다.  
+>   >  
+>   > 예를 들면 이미지 리스트를 출력하는 경우 ,  
+>   > 사용자 브라우져에 보이는 이미지만 로딩하고 다른 이미지들은 사용자가 스크롤 하면서 이미지에 가까워지면 로딩된다.  
+>   > [참고 1](https://code.i-harness.com/ko/q/8db2) , [참고 2](https://medium.com/@devkuu/lazy-loading-%EC%9D%B4%EB%9E%80-834be8c85833)
+
+2-2 사용 방법 
+> - 첫번쨰 gradle 설정
+>   > - project수준의 build.gradle 설정
+>   > ```gradle
+>   > allprojects {
+>   >     repositories {
+>   >         jcenter()
+>   >         maven { url 'https://maven.google.com' }    // 이부분
+>   >     }
+>   > }
+>   > ```
+>   > - app수준의 build.gradle 설정
+>   > ```gradle
+>   > implementation "android.arch.persistence.room:runtime:1.0.0"
+>   > annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
+>   > ```
+
+> - 코드 작성
+>   > - 첫번째 : 테이블 정의
+>   > ```java
+>   > @Entity(tableName = "search")
+>   > public class Search {
+>   >     @PrimaryKey(autoGenerate = true)
+>   >     private int id;
+>   >     @ColumnInfo
+>   >     private String search;
+>   >     public Search() {}
+>   >     public Search(String search) {
+>   >         this.search = search;
+>   >     }
+>   >     public int getId() {
+>   >         return id;
+>   >     }
+>   >     public void setId(int id) {
+>   >         this.id = id;
+>   >     }
+>   >     public String getSearch() {
+>   >         return search;
+>   >     }
+>   >    public void setSearch(String search) {
+>   >         this.search = search;
+>   >     }
+>   > }
+>   > ```
+>   > 
+>   > - 두번쨰 : DAO파일 작성
+>   > ```java
+>   > @Dao
+>   > public interface SearchDao {
+>   >     @Query("select distinct id, search from Search order by id desc")
+>   >     List<Search> getAll();
+>   >     @Insert
+>   >     void insertItem(Search model);
+>   > 
+>   >     @Delete
+>   >     void deleteItem(Search model);
+>   >     @Query("delete from Search WHERE id NOT IN (SELECT MAX(id) FROM Search GROUP BY search)")
+>   >     void deleteItems();
+>   > }
+>   > ```
+>   >
+>   > - 세번째 : Database생성
+>   > ```java
+>   > @Database(entities = {Search.class}, version = 1, exportSchema = false)
+>   > public abstract class DBHelper extends RoomDatabase {
+>   >     private static DBHelper INSTANCE = null;
+>   >     private static final Object sLock = new Object();
+>   >     public static DBHelper getInstance(Context context) {
+>   >         synchronized (sLock) {
+>   >             if (INSTANCE == null) {
+>   >                 INSTANCE = Room
+>   >                         .databaseBuilder(context.getApplicationContext()
+>   >                                 , DBHelper.class
+>   >                                 , "soundhub.db")
+>   >                         .allowMainThreadQueries()
+>   >                         .build();
+>   >             }
+>   >             return INSTANCE;
+>   >         }
+>   >     }
+>   >     // Dao 선언
+>   >     public abstract SearchDao searchDao();
+>   > }
+>   > ```
+>   >
+>   > - 네번쨰 : 사용
+>   > ```java
+>   > DBHelper dbHelper =  DBHelper.getInstance(view.getContext());
+>   > SearchDao dao = dbHelper.searchDao();
+>   > List<Search> data = dao.getAll();
+>   > ```
