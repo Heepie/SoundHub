@@ -13,6 +13,7 @@
   
 - 프로젝트 시연
   1. 동영상: https://www.youtube.com/watch?v=toBCfZmIJk0&t=7s
+  2. 발표자료: https://www.slideshare.net/HeeJuMun/soundhub
 
 ## 사용한 아키텍처(MVVM)
 - 아키텍처를 사용한 이유
