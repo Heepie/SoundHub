@@ -31,7 +31,7 @@
 - Detail Post (Play music simultaneously, Request music mixing, Upload recode, Update file)
 ![detail](https://github.com/Heepie/SoundHub/blob/develop/img/screen_shot3.png)
 
-## Code code
+## Core code
 ### Heepie
 - ### MVVM, Data Binding
 ![flow](https://github.com/Heepie/SoundHub/blob/develop/img/mvvm_flow_watermark.png)</br> 
